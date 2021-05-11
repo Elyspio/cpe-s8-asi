@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Component
@@ -26,12 +27,12 @@ public class MarketPlaceService
             if(cardValue.getUser() == null) {
                 var user = userRepository.findById(idUser);
                 if(user.isEmpty()) {
-                    throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Could not found the user with id %d", idUser));
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Could not found the user with id %d", idUser));
                 }
                 var userValue = user.get();
                 double deltaMoney = userValue.getMoney() - cardValue.getPrice();
                 if(deltaMoney < 0) {
-                    throw new HttpClientErrorException(HttpStatus.FORBIDDEN, String.format("User %d can't afford %d", idUser, idCard));
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, String.format("User %d can't afford %d", idUser, idCard));
                 }
 
                 userValue.setMoney(deltaMoney);
@@ -43,7 +44,7 @@ public class MarketPlaceService
                 return deltaMoney;
             }
             else {
-                throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("The card %d is already linked to a user", idCard));
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("The card %d is already linked to a user", idCard));
 
             }
         }
@@ -51,4 +52,9 @@ public class MarketPlaceService
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }
     }
+    public List<CardEntity> getCards()
+    {
+        return new ArrayList<>();
+    }
+
 }

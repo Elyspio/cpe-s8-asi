@@ -1,13 +1,7 @@
-package fr.cpe.s8.atelier2.model.entities;
+package fr.cpe.s8.atelier2.model.dto;
 
-
-import javax.persistence.*;
-
-@Entity
-public class CardEntity
+public class CardBase
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cardId;
     private String name;
     private String description;
@@ -16,16 +10,18 @@ public class CardEntity
     private Long energy;
     private Long hp;
     private Long price;
-    private String imgUrl;
 
-    @ManyToOne()
-    @JoinColumn(name="user_id")
-    private UserEntity user;
-
-    public CardEntity()
+    public CardBase(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price)
     {
+        this.cardId = cardId;
+        this.name = name;
+        this.description = description;
+        this.family = family;
+        this.affinity = affinity;
+        this.energy = energy;
+        this.hp = hp;
+        this.price = price;
     }
-
 
     public Long getCardId()
     {
@@ -77,6 +73,16 @@ public class CardEntity
         this.affinity = affinity;
     }
 
+    public Long getEnergy()
+    {
+        return energy;
+    }
+
+    public void setEnergy(Long energy)
+    {
+        this.energy = energy;
+    }
+
     public Long getHp()
     {
         return hp;
@@ -97,33 +103,5 @@ public class CardEntity
         this.price = price;
     }
 
-    public String getImgUrl()
-    {
-        return imgUrl;
-    }
 
-    public void setImgUrl(String imgUrl)
-    {
-        this.imgUrl = imgUrl;
-    }
-
-    public UserEntity getUser()
-    {
-        return user;
-    }
-
-    public void setUser(UserEntity user)
-    {
-        this.user = user;
-    }
-
-    public Long getEnergy()
-    {
-        return energy;
-    }
-
-    public void setEnergy(Long energy)
-    {
-        this.energy = energy;
-    }
 }
