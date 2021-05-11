@@ -58,4 +58,12 @@ public class CardDao
         return this.myPoneyList.get(index);
     }
 
+
+    public CardBean addCard(String name, String color, String imgUrl, String superPower)
+    {
+        CardBean card = new CardBean(name, color, imgUrl, superPower);
+        this.myPoneyList.add(card);
+        return card;
+    }
+
 }
