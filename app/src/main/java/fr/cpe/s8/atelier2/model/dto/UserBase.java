@@ -1,11 +1,12 @@
-package fr.cpe.s8.atelier2.model.entities;
+package fr.cpe.s8.atelier2.model.dto;
 
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
-@Entity
-public class UserEntity
+public class UserBase
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,26 +14,16 @@ public class UserEntity
     private String firstname;
     private String lastname;
     private double money;
-    private String login;
-    private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<CardEntity> card;
+    private List<Long> cardId;
 
-    public UserEntity()
-    {
-
-    }
-
-    public UserEntity(Long userId, String firstname, String lastname, double money, String login, String password, List<CardEntity> card)
+    public UserBase(Long userId, String firstname, String lastname, double money, List<Long> cardId)
     {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.money = money;
-        this.login = login;
-        this.password = password;
-        this.card = card;
+        this.cardId = cardId;
     }
 
     public Long getUserId()
@@ -75,33 +66,13 @@ public class UserEntity
         this.money = money;
     }
 
-    public String getLogin()
+    public List<Long> getCardId()
     {
-        return login;
+        return cardId;
     }
 
-    public void setLogin(String login)
+    public void setCardId(List<Long> cardId)
     {
-        this.login = login;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public List<CardEntity> getCard()
-    {
-        return card;
-    }
-
-    public void setCard(List<CardEntity> card)
-    {
-        this.card = card;
+        this.cardId = cardId;
     }
 }

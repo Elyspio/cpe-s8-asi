@@ -19,13 +19,26 @@ public class CardEntity
     private String imgUrl;
 
     @ManyToOne()
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     public CardEntity()
     {
     }
 
+    public CardEntity(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price, String imgUrl, UserEntity user)
+    {
+        this.cardId = cardId;
+        this.name = name;
+        this.description = description;
+        this.family = family;
+        this.affinity = affinity;
+        this.energy = energy;
+        this.hp = hp;
+        this.price = price;
+        this.imgUrl = imgUrl;
+        this.user = user;
+    }
 
     public Long getCardId()
     {
