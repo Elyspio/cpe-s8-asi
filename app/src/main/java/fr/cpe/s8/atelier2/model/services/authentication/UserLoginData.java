@@ -1,10 +1,13 @@
 package fr.cpe.s8.atelier2.model.services.authentication;
 
+import fr.cpe.s8.atelier2.model.entities.UserEntity;
+
 public class UserLoginData
 {
     private String login;
     private String salt;
     private String token = null;
+    private UserEntity user = null;
 
 
     public UserLoginData(String login, String salt)
@@ -42,4 +45,15 @@ public class UserLoginData
     {
         this.token = token;
     }
+
+    public UserEntity getUser()
+    {
+        return user;
+    }
+
+    public void setUser(UserEntity user)
+    {
+        this.user = user;
+    }
+
 }

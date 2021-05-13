@@ -1,6 +1,6 @@
 package fr.cpe.s8.atelier2.model.services.authentication;
 
-import fr.cpe.s8.atelier2.controllers.requests.UserRegisterRequest;
+import fr.cpe.s8.atelier2.view.controllers.requests.UserRegisterRequest;
 import fr.cpe.s8.atelier2.model.entities.UserEntity;
 import fr.cpe.s8.atelier2.model.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -18,7 +19,8 @@ import java.util.Set;
 public class AuthenticationService
 {
 
-    static private Set<UserLoginData> users;
+    static private final Set<UserLoginData> users = new HashSet<>();
+
     @Autowired()
     private UserRepository userRepository;
 
@@ -32,6 +34,16 @@ public class AuthenticationService
         users.add(new UserLoginData(login, salt));
 
         return salt;
+    }
+
+
+    /**
+     * Get information about a cached user from its token
+     * @param token user's token
+     * @return user's information
+     */
+    public static UserLoginData getUserCached(String token) {
+        return users.stream().filter(user -> user.getToken().equals(token)).findAny().orElse(null);
     }
 
 
@@ -50,13 +62,14 @@ public class AuthenticationService
                 {
                     var token = generateSalt(30);
                     data.setToken(token);
+                    data.setUser(user);
                     new java.util.Timer().schedule(
                             new java.util.TimerTask()
                             {
                                 @Override
                                 public void run()
                                 {
-                                    logout(token);
+                                    logout(user.getUserId());
                                 }
                             },
                             5000
@@ -84,13 +97,12 @@ public class AuthenticationService
     }
 
 
-    public void logout(String token)
+    public void logout(Long userId)
     {
-        users.removeIf(x -> x.getToken().equals(token));
-
+        users.removeIf(x -> x.getUser().getUserId().equals(userId));
     }
 
-    // https://unpkg.com/md5@2.3.0/md5.js
+    // TODO use lib in frontend https://unpkg.com/md5@2.3.0/md5.js
     public UserEntity register(UserRegisterRequest param)
     {
         if (userRepository.findByLogin(param.getLogin()) != null)
@@ -114,7 +126,7 @@ public class AuthenticationService
     }
 
 
-    private String generateSalt(@Nullable Integer length)
+    String generateSalt(@Nullable Integer length)
     {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'

@@ -1,4 +1,4 @@
-package fr.cpe.s8.atelier2.interceptors;
+package fr.cpe.s8.atelier2.view.interceptors;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

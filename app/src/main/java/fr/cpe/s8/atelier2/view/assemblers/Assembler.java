@@ -1,4 +1,4 @@
-package fr.cpe.s8.atelier2.assemblers;
+package fr.cpe.s8.atelier2.view.assemblers;
 
 public interface Assembler<Entity, Dto>
 {

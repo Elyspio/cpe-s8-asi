@@ -1,6 +1,6 @@
-package fr.cpe.s8.atelier2.controllers;
+package fr.cpe.s8.atelier2.view.controllers;
 
-import fr.cpe.s8.atelier2.assemblers.CardAssembler;
+import fr.cpe.s8.atelier2.view.assemblers.CardAssembler;
 import fr.cpe.s8.atelier2.model.dto.CardBase;
 import fr.cpe.s8.atelier2.model.services.MarketPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;

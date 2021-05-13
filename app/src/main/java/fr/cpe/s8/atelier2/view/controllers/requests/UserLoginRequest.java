@@ -1,4 +1,4 @@
-package fr.cpe.s8.atelier2.controllers.requests;
+package fr.cpe.s8.atelier2.view.controllers.requests;
 
 public final class UserLoginRequest
 {
