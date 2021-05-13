@@ -23,8 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin(origins = "*")
 @RestController("authentication")
 @RequestMapping("/authentication")
+
 public class AuthenticationController
 {
 
@@ -65,7 +67,7 @@ public class AuthenticationController
             @ApiResponse(responseCode = "201", description = "Account created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = UserBase.class))
+                            schema = @Schema(implementation = String.class))
             ),
             @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content(
@@ -80,7 +82,6 @@ public class AuthenticationController
     {
         return service.initLogin(login);
     }
-
 
     @Operation(summary = "Finish login")
     @ApiResponses({
@@ -103,8 +104,10 @@ public class AuthenticationController
         String hash = service.loginVerify(loginInfo.getLogin(), loginInfo.getHash());
         var user = userService.getUserFromLogin(loginInfo.getLogin());
         Cookie cookie = new Cookie(authenticationToken, hash);
+        cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(60 * 5); // 5 minutes
+        cookie.setDomain("elyspio.fr");
+        cookie.setMaxAge(5 * 60);
         response.addCookie(cookie);
         return userAssembler.toDto(user);
     }
@@ -116,7 +119,7 @@ public class AuthenticationController
             @ApiResponse(responseCode = "204", description = "Logout complete",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = UserBase.class))
+                            schema = @Schema())
             ),
             @ApiResponse(responseCode = "406", description = "You must be logged in before logout :)",
                     content = @Content(

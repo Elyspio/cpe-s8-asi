@@ -1,11 +1,12 @@
-import {AuthenticationControllerApi, MarketplaceControllerApi} from "./back"
+import {AuthenticationControllerApi, MarketplaceControllerApi, UserControllerApi} from "./back"
 
 
-const backend = "http://localhost:8080";
+const backend = "https://elyspio.fr/cpe/asi/back";
 
 export var Apis = {
 	authentication: new AuthenticationControllerApi(undefined, backend),
-	marketplace: new MarketplaceControllerApi(undefined, backend)
+	marketplace: new MarketplaceControllerApi(undefined, backend),
+	user: new UserControllerApi(undefined, backend)
 };
 
 

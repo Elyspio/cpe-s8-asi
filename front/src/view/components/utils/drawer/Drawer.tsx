@@ -52,12 +52,14 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		mainSmaller: {
 			width: `calc(100% - ${drawerWidth}px) !important`,
+			height: "100vh",
 			transition: theme.transitions.create('width', {
 				easing: theme.transitions.easing.sharp,
 				duration: theme.transitions.duration.enteringScreen,
 			}),
 		},
 		main: {
+			height: "100vh",
 			width: `calc(100% - ${baseWidth}px)`,
 			transition: theme.transitions.create('width', {
 				easing: theme.transitions.easing.sharp,

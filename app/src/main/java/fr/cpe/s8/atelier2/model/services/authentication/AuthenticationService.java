@@ -56,13 +56,15 @@ public class AuthenticationService
             var user = userRepository.findByLogin(login);
             if (user != null)
             {
-                var hash = security.md5(user.getPassword(), salt);
+                var hash  = user.getPassword() +  salt;
                 var isAuthorized = hash.equals(userHash);
                 if (isAuthorized)
                 {
                     var token = generateSalt(30);
+                    users.remove(data);
                     data.setToken(token);
                     data.setUser(user);
+                    users.add(data);
                     new java.util.Timer().schedule(
                             new java.util.TimerTask()
                             {
@@ -72,7 +74,7 @@ public class AuthenticationService
                                     logout(user.getUserId());
                                 }
                             },
-                            5000
+                            50000
                     );
 
                     return token;

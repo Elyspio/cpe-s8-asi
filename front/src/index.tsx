@@ -7,6 +7,7 @@ import {ThemeProvider} from '@material-ui/core';
 import {themes} from "./config/theme";
 import {store, useAppSelector, history} from "./view/store/store";
 import {ConnectedRouter} from "connected-react-router";
+import {ToastContainer} from "react-toastify";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<ConnectedRouter history={history}>
 				<Application/>
+				<ToastContainer position={"top-right"}/>
 			</ConnectedRouter>
 		</ThemeProvider>
 	);

@@ -19,7 +19,7 @@ public class Security
         {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] hash = md.digest(byteChaine);
-            return Arrays.toString(hash);
+            return new String(hash);
         }
         catch (NoSuchAlgorithmException e)
         {

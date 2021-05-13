@@ -356,7 +356,7 @@ export const AuthenticationControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginInit(body?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserBase>> {
+        async loginInit(body?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.loginInit(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -377,7 +377,7 @@ export const AuthenticationControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async logout(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserBase>> {
+        async logout(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.logout(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -409,7 +409,7 @@ export const AuthenticationControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginInit(body?: string, options?: any): AxiosPromise<UserBase> {
+        loginInit(body?: string, options?: any): AxiosPromise<string> {
             return localVarFp.loginInit(body, options).then((request) => request(axios, basePath));
         },
         /**
@@ -428,7 +428,7 @@ export const AuthenticationControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logout(options?: any): AxiosPromise<UserBase> {
+        logout(options?: any): AxiosPromise<void> {
             return localVarFp.logout(options).then((request) => request(axios, basePath));
         },
         /**
@@ -716,6 +716,104 @@ export class MarketplaceControllerApi extends BaseAPI {
      */
     public sell(idCard: number, options?: any) {
         return MarketplaceControllerApiFp(this.configuration).sell(idCard, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * UserControllerApi - axios parameter creator
+ * @export
+ */
+export const UserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get connected user\'s information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAuthenticatedUser: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/user/connected`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserControllerApi - functional programming interface
+ * @export
+ */
+export const UserControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get connected user\'s information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAuthenticatedUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserBase>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthenticatedUser(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * UserControllerApi - factory interface
+ * @export
+ */
+export const UserControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UserControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get connected user\'s information
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAuthenticatedUser(options?: any): AxiosPromise<UserBase> {
+            return localVarFp.getAuthenticatedUser(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserControllerApi - object-oriented interface
+ * @export
+ * @class UserControllerApi
+ * @extends {BaseAPI}
+ */
+export class UserControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get connected user\'s information
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public getAuthenticatedUser(options?: any) {
+        return UserControllerApiFp(this.configuration).getAuthenticatedUser(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

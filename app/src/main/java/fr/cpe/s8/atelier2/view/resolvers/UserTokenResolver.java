@@ -3,10 +3,17 @@ package fr.cpe.s8.atelier2.view.resolvers;
 import fr.cpe.s8.atelier2.model.services.authentication.AuthenticationService;
 import fr.cpe.s8.atelier2.view.controllers.annotations.GetConnectedUser;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Array;
+import java.util.Arrays;
 
 import static fr.cpe.s8.atelier2.view.controllers.AuthenticationController.authenticationToken;
 
@@ -25,10 +32,21 @@ public class UserTokenResolver implements HandlerMethodArgumentResolver
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) throws Exception
     {
-        String token = webRequest.getHeader(authenticationToken);
-        if(token != null) {
-            var userData = AuthenticationService.getUserCached(token);
-            return userData.getUser();
+        var request = (HttpServletRequest) webRequest.getNativeRequest();
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies)
+            {
+                if (cookie.getName().equals(authenticationToken))
+                {
+                    var userData = AuthenticationService.getUserCached(cookie.getValue());
+                    if(userData == null) {
+                        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+                    }
+                    return userData.getUser();
+                }
+            }
+
         }
         return null;
     }
