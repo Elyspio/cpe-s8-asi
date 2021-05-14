@@ -1,11 +1,19 @@
 package fr.cpe.s8.atelier2.view.exceptions;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class RuntimeException
 {
+    @NotEmpty
     private String timestamp;
-    private long status;
+    @NotNull
+    private Long status;
+    @NotEmpty
     private String error;
+    @NotEmpty
     private String message;
+    @NotEmpty
     private String path;
 
     public String getTimestamp()

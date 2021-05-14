@@ -1,4 +1,4 @@
-package fr.cpe.s8.atelier2.view.assemblers;
+package fr.cpe.s8.atelier2.model.assemblers;
 
 import fr.cpe.s8.atelier2.model.dto.UserBase;
 import fr.cpe.s8.atelier2.model.entities.CardEntity;

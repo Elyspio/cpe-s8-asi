@@ -4,7 +4,7 @@ import fr.cpe.s8.atelier2.model.dto.UserBase;
 import fr.cpe.s8.atelier2.model.entities.UserEntity;
 import fr.cpe.s8.atelier2.model.services.UserService;
 import fr.cpe.s8.atelier2.model.services.authentication.AuthenticationService;
-import fr.cpe.s8.atelier2.view.assemblers.UserAssembler;
+import fr.cpe.s8.atelier2.model.assemblers.UserAssembler;
 import fr.cpe.s8.atelier2.view.controllers.annotations.GetConnectedUser;
 import fr.cpe.s8.atelier2.view.controllers.requests.UserLoginRequest;
 import fr.cpe.s8.atelier2.view.controllers.requests.UserRegisterRequest;
@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationController
 {
-
-    public static final String authenticationToken = "authentication_token";
 
     @Autowired()
     private AuthenticationService service;
@@ -103,12 +101,8 @@ public class AuthenticationController
     {
         String hash = service.loginVerify(loginInfo.getLogin(), loginInfo.getHash());
         var user = userService.getUserFromLogin(loginInfo.getLogin());
-        Cookie cookie = new Cookie(authenticationToken, hash);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setDomain("elyspio.fr");
-        cookie.setMaxAge(5 * 60);
-        response.addCookie(cookie);
+        Cookie cookie = new Cookie(AuthenticationService.authenticationToken, hash);
+        response.addCookie(service.createAuthenticationCookie(hash));
         return userAssembler.toDto(user);
     }
 
@@ -131,14 +125,14 @@ public class AuthenticationController
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void logout(HttpServletResponse response, @GetConnectedUser UserEntity connectedUser)
     {
+        response.addCookie(service.createAuthenticationCookie(null));
+
         if (connectedUser == null)
         {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "You must be logged in before logout");
         }
+
         service.logout(connectedUser.getUserId());
-        var cookie = new Cookie(authenticationToken, "");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 
 

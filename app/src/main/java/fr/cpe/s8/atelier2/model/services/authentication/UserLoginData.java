@@ -2,6 +2,7 @@ package fr.cpe.s8.atelier2.model.services.authentication;
 
 import fr.cpe.s8.atelier2.model.entities.UserEntity;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class UserLoginData

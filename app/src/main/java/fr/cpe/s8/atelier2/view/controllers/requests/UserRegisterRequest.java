@@ -1,12 +1,17 @@
 package fr.cpe.s8.atelier2.view.controllers.requests;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public final class UserRegisterRequest
 {
+    @NotEmpty
     private final String firstname;
+    @NotEmpty
     private final String lastname;
+    @NotEmpty
     private final String login;
+    @NotEmpty
     private final String password;
 
     public UserRegisterRequest(

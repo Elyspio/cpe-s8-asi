@@ -1,20 +1,24 @@
 package fr.cpe.s8.atelier2.model.dto;
 
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class UserBase
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @NotEmpty
+    private  String lastname;
+    @NotEmpty
     private Long userId;
+    @NotEmpty
     private String firstname;
-    private String lastname;
+    @NotEmpty
     private double money;
 
+    @NotNull
     private List<Long> cardId;
 
     public UserBase(Long userId, String firstname, String lastname, double money, List<Long> cardId)

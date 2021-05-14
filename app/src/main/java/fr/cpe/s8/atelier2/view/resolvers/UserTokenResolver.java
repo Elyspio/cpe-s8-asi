@@ -12,10 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Array;
-import java.util.Arrays;
 
-import static fr.cpe.s8.atelier2.view.controllers.AuthenticationController.authenticationToken;
+import static fr.cpe.s8.atelier2.model.services.authentication.AuthenticationService.authenticationToken;
 
 public class UserTokenResolver implements HandlerMethodArgumentResolver
 {

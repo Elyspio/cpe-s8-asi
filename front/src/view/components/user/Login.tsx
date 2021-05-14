@@ -13,7 +13,6 @@ function Login() {
 
 	const submit = React.useCallback(() => {
 		dispatch(reduxLogin({login, password}))
-		setPassword("");
 	}, [dispatch, login, password])
 
 	return (
@@ -22,6 +21,8 @@ function Login() {
 			<Paper className={"login-body"} onKeyDown={e => e.keyCode === 13 && submit()}>
 
 				<Typography variant={"h6"}>Login</Typography>
+
+				<Typography variant={"overline"} className={"heading"}>Enter your information</Typography>
 
 				<TextField
 					id={"login-name"}

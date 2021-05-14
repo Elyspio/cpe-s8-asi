@@ -79,7 +79,7 @@ const getActions = (actions: Action[]) => {
 
 	const actionComponents = (comp.length > 0 ? comp : [actions]).map((actions, i) => <List className={"toolbar"}
 	                                                                                        key={i}>
-		{actions.map((action, i) => <ListItem button key={i} onClick={() => action.onClick && action.onClick()}>
+		{actions.map((action, i) => <ListItem className={"drawer-action"} button key={i} onClick={() => action.onClick && action.onClick()}>
 			<ListItemIcon>{action.icon}</ListItemIcon>
 			{action.text}
 		</ListItem>)}

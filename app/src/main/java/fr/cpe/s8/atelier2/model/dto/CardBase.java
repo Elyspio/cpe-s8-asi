@@ -1,14 +1,25 @@
 package fr.cpe.s8.atelier2.model.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class CardBase
 {
+    @NotNull
     private Long cardId;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @NotEmpty
     private String family;
+    @NotEmpty
     private String affinity;
+    @NotNull
     private Long energy;
+    @NotNull
     private Long hp;
+    @NotNull
     private Long price;
 
     public CardBase(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price)

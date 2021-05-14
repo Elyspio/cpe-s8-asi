@@ -38,7 +38,7 @@ export const register = createAsyncThunk("user/register", async (data: UserRegis
 })
 
 
-export const getUserInfo = createAsyncThunk("user/getUserInfo", async (arg, {dispatch}) => {
+export const getUserInfo = createAsyncThunk("user/getUserInfo", async () => {
 	try {
 		return await Apis.user.getAuthenticatedUser().then(x => x.data);
 	} catch (e) {
@@ -49,5 +49,9 @@ export const getUserInfo = createAsyncThunk("user/getUserInfo", async (arg, {dis
 
 
 export const logout = createAsyncThunk("user/logout", async () => {
-	await Apis.authentication.logout().then(x => x.data);
+	try {
+		await Apis.authentication.logout();
+	}
+	catch (e) {
+	}
 })

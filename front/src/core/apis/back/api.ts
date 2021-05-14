@@ -32,49 +32,49 @@ export interface CardBase {
      * @type {number}
      * @memberof CardBase
      */
-    cardId?: number;
+    cardId: number;
     /**
      * 
      * @type {string}
      * @memberof CardBase
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof CardBase
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
      * @memberof CardBase
      */
-    family?: string;
+    family: string;
     /**
      * 
      * @type {string}
      * @memberof CardBase
      */
-    affinity?: string;
+    affinity: string;
     /**
      * 
      * @type {number}
      * @memberof CardBase
      */
-    energy?: number;
+    energy: number;
     /**
      * 
      * @type {number}
      * @memberof CardBase
      */
-    hp?: number;
+    hp: number;
     /**
      * 
      * @type {number}
      * @memberof CardBase
      */
-    price?: number;
+    price: number;
 }
 /**
  * 
@@ -87,31 +87,31 @@ export interface RuntimeException {
      * @type {string}
      * @memberof RuntimeException
      */
-    timestamp?: string;
+    timestamp: string;
     /**
      * 
      * @type {number}
      * @memberof RuntimeException
      */
-    status?: number;
+    status: number;
     /**
      * 
      * @type {string}
      * @memberof RuntimeException
      */
-    error?: string;
+    error: string;
     /**
      * 
      * @type {string}
      * @memberof RuntimeException
      */
-    message?: string;
+    message: string;
     /**
      * 
      * @type {string}
      * @memberof RuntimeException
      */
-    path?: string;
+    path: string;
 }
 /**
  * 
@@ -121,34 +121,34 @@ export interface RuntimeException {
 export interface UserBase {
     /**
      * 
-     * @type {number}
-     * @memberof UserBase
-     */
-    userId?: number;
-    /**
-     * 
      * @type {string}
      * @memberof UserBase
      */
-    firstname?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserBase
-     */
-    lastname?: string;
+    lastname: string;
     /**
      * 
      * @type {number}
      * @memberof UserBase
      */
-    money?: number;
+    userId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBase
+     */
+    firstname: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserBase
+     */
+    money: number;
     /**
      * 
      * @type {Array<number>}
      * @memberof UserBase
      */
-    cardId?: Array<number>;
+    cardId: Array<number>;
 }
 /**
  * 
@@ -161,13 +161,13 @@ export interface UserLoginRequest {
      * @type {string}
      * @memberof UserLoginRequest
      */
-    login?: string;
+    login: string;
     /**
      * 
      * @type {string}
      * @memberof UserLoginRequest
      */
-    hash?: string;
+    hash: string;
 }
 /**
  * 
@@ -180,25 +180,25 @@ export interface UserRegisterRequest {
      * @type {string}
      * @memberof UserRegisterRequest
      */
-    firstname?: string;
+    firstname: string;
     /**
      * 
      * @type {string}
      * @memberof UserRegisterRequest
      */
-    lastname?: string;
+    lastname: string;
     /**
      * 
      * @type {string}
      * @memberof UserRegisterRequest
      */
-    login?: string;
+    login: string;
     /**
      * 
      * @type {string}
      * @memberof UserRegisterRequest
      */
-    password?: string;
+    password: string;
 }
 
 /**
