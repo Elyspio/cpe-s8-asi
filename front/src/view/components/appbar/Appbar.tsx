@@ -2,13 +2,7 @@ import React from 'react';
 import {AppBar, Grid, Toolbar, Typography} from '@material-ui/core';
 import {useAppSelector} from "../../store/store";
 
-
-interface Props {
-	appName: string
-}
-
-
-function Appbar(props: Props) {
+function Appbar() {
 
 	const {title, bank, userName} = useAppSelector(s => {
 		let pathname = s.router.location.pathname;

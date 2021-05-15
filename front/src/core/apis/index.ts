@@ -1,7 +1,7 @@
 import {AuthenticationControllerApi, MarketplaceControllerApi, UserControllerApi} from "./back"
 
 
-const backend = "https://elyspio.fr/cpe/asi/back";
+const backend = window.location.origin + "/cpe/asi/back";
 
 export var Apis = {
 	authentication: new AuthenticationControllerApi(undefined, backend),

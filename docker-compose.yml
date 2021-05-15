@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
+
+  proxy:
+    ports:
+      - 80:80
+    restart: unless-stopped
+    build:
+      context: "./proxy"
+      dockerfile: "Dockerfile"
+    environment:
+      FRONT_SERVER: "192.168.0.44:3000"
+      BACK_SERVER: "192.168.0.44:8080"
+    privileged: true
