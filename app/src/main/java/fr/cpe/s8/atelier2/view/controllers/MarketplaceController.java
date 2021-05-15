@@ -2,7 +2,9 @@ package fr.cpe.s8.atelier2.view.controllers;
 
 import fr.cpe.s8.atelier2.model.assemblers.CardAssembler;
 import fr.cpe.s8.atelier2.model.dto.CardBase;
+import fr.cpe.s8.atelier2.model.entities.UserEntity;
 import fr.cpe.s8.atelier2.model.services.MarketPlaceService;
+import fr.cpe.s8.atelier2.view.controllers.annotations.GetConnectedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +25,15 @@ public class MarketplaceController
     private CardAssembler cardAssembler;
 
     @RequestMapping(value = "/sell", method = RequestMethod.POST)
-    public double sell(@PathVariable("idCard") Long idCard)
+    public double sell(@PathVariable("idCard") Long idCard, @GetConnectedUser UserEntity connectedUser)
     {
-        return service.sell(0L, idCard);
+        return service.sell(connectedUser.getUserId(), idCard);
     }
 
     @RequestMapping(value = "/buy/{idCard}", method = RequestMethod.POST)
-    public double buy(@PathVariable("idCard") Long idCard)
+    public double buy(@PathVariable("idCard") Long idCard, @GetConnectedUser UserEntity connectedUser)
     {
-        return service.buy(0L, idCard);
+        return service.buy(connectedUser.getUserId(), idCard);
     }
 
     @RequestMapping(value = "/cards", method = RequestMethod.GET)

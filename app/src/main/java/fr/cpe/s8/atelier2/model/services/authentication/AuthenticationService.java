@@ -37,13 +37,19 @@ public class AuthenticationService
      */
     public static UserLoginData getUserCached(String token)
     {
-        return users.stream().filter(user -> user.getToken().equals(token)).findAny().orElse(null);
+        return users
+                .stream()
+                .filter(user -> token.equals(user.getToken()))
+                .findAny()
+                .orElse(null);
     }
 
     public String initLogin(String login)
     {
-        var salt = generateSalt(10);
+        var info = users.stream().filter(x -> login.equals(x.getLogin())).findAny().orElse(null);
+        if (info != null) return info.getSalt();
 
+        var salt = generateSalt(10);
         users.add(new UserLoginData(login, salt));
 
         return salt;
@@ -54,15 +60,21 @@ public class AuthenticationService
 
         UserLoginData alreadyLoggedUser = users
                 .stream()
-                .filter(x -> x.getLogin().equals(login) && x.getToken() != null)
+                .filter(x -> login.equals(x.getLogin()) && x.getToken() != null)
                 .findFirst()
                 .orElse(null);
 
-        if(alreadyLoggedUser != null) {
+        if (alreadyLoggedUser != null)
+        {
             return alreadyLoggedUser.getToken();
         }
 
-        var data = users.stream().filter(x -> x.getLogin().equals(login)).findAny().orElse(null);
+        var data = users
+                .stream()
+                .filter(x -> x.getLogin().equals(login))
+                .findAny()
+                .orElse(null);
+
         if (data != null)
         {
             var salt = data.getSalt();
@@ -161,7 +173,6 @@ public class AuthenticationService
         Cookie cookie = new Cookie(authenticationToken, val);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setDomain("elyspio.fr");
         cookie.setMaxAge(val == null ? 0 : 5 * 60);
         return cookie;
     }

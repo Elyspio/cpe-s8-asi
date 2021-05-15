@@ -18,7 +18,9 @@ public class CardAssembler implements Assembler<CardEntity, CardBase>
                 cardEntity.getAffinity(),
                 cardEntity.getEnergy(),
                 cardEntity.getHp(),
-                cardEntity.getPrice()
+                cardEntity.getPrice(),
+                cardEntity.getDefense(),
+                cardEntity.getAttack()
         );
     }
 

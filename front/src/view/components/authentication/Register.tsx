@@ -1,7 +1,6 @@
 import React from 'react';
 import './Login.scss'
-import {Button, makeStyles, Paper, TextField, Typography} from "@material-ui/core";
-import {useAppDispatch} from "../../store/store";
+import {Button, Paper, TextField, Typography} from "@material-ui/core";
 import {register} from "../../store/user/user.async.action";
 import {useDispatch} from "react-redux";
 
@@ -21,10 +20,8 @@ export function Register() {
 	}, [dispatch, login, password, lastname, firstname])
 	return (
 
-		<div className="login">
+		<div className="frame">
 			<Paper className={"login-body"} onKeyDown={e => e.keyCode === 13 && submit()}>
-
-				<Typography variant={"h6"}>Register</Typography>
 
 				<Typography variant={"overline"} className={"heading"}>Enter your information</Typography>
 

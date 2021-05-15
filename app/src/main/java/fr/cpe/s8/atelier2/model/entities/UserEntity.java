@@ -7,8 +7,9 @@ import java.util.List;
 @Entity
 public class UserEntity
 {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String firstname;
     private String lastname;

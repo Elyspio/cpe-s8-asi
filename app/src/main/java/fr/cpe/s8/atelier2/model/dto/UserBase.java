@@ -1,7 +1,6 @@
 package fr.cpe.s8.atelier2.model.dto;
 
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -10,7 +9,7 @@ public class UserBase
 {
 
     @NotEmpty
-    private  String lastname;
+    private String lastname;
     @NotEmpty
     private Long userId;
     @NotEmpty

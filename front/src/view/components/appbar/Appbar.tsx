@@ -1,6 +1,7 @@
 import React from 'react';
 import {AppBar, Grid, Toolbar, Typography} from '@material-ui/core';
 import {useAppSelector} from "../../store/store";
+import {routes} from "../Application";
 
 function Appbar() {
 
@@ -8,14 +9,15 @@ function Appbar() {
 		let pathname = s.router.location.pathname;
 
 		let title = "";
-		if (pathname === "/user/login") title = "Login"
-		if (pathname === "/user/register") title = "Register"
-		if (pathname === "/marketplace/buy") title = "Buy"
-		if (pathname === "/marketplace/sell") title = "Sell"
+		if (pathname === routes.login) title = "Login"
+		if (pathname === routes.register) title = "Register"
+		if (pathname === routes.home) title = "Home"
+		if (pathname === routes.buy) title = "Buy"
+		if (pathname === routes.sell) title = "Sell"
 
 		return {
 			title,
-			userName: s.user.infos  ? `${s.user.infos.firstname}. ${s.user.infos.lastname[0].toLocaleUpperCase()} `: undefined,
+			userName: s.user.infos ? `${s.user.infos.firstname}. ${s.user.infos.lastname[0].toLocaleUpperCase()} ` : undefined,
 			bank: s.user.infos?.money
 		};
 	})

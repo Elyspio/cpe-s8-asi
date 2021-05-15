@@ -1,3 +1,5 @@
+@import "./variables";
+
 .Application {
 
 	width: 100vw;
@@ -11,6 +13,15 @@
 	.content {
 		height: 100%;
 		width: 100%;
+
+		.frame {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: calc(100% - #{$headerSize});
+			width: 100%;
+		}
+
 	}
 
 

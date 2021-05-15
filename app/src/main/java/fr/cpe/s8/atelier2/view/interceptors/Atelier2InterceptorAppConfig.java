@@ -11,9 +11,9 @@ import java.util.List;
 @Component
 public class Atelier2InterceptorAppConfig implements WebMvcConfigurer
 {
-    private Atelier2Interceptor atelier2Interceptor()
+    private MustBeConnectedInterceptor mustBeConnectedInterceptor()
     {
-        return new Atelier2Interceptor();
+        return new MustBeConnectedInterceptor();
     }
 
     private UserTokenResolver userTokenResolver()
@@ -24,7 +24,11 @@ public class Atelier2InterceptorAppConfig implements WebMvcConfigurer
     @Override
     public void addInterceptors(InterceptorRegistry registry)
     {
-        registry.addInterceptor(this.atelier2Interceptor());
+        registry.addInterceptor(this.mustBeConnectedInterceptor()).excludePathPatterns(
+                "/authentication/**",
+                "/swagger-ui/**",
+                "/swagger/**"
+        );
     }
 
 

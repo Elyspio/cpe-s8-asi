@@ -1,18 +1,16 @@
 import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
-import {cardReducer} from "./card";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {userReducer} from "./user";
 import {marketplaceReducer} from "./marketplace";
 import {themeReducer} from "./theme";
 import {connectRouter, routerMiddleware} from "connected-react-router"
-import { createBrowserHistory } from 'history'
+import {createBrowserHistory} from 'history'
 
 export const history = createBrowserHistory({basename: "/cpe/asi/front/"})
 
 
 export const store = configureStore({
 	reducer: combineReducers({
-		card: cardReducer,
 		user: userReducer,
 		marketplace: marketplaceReducer,
 		theme: themeReducer,

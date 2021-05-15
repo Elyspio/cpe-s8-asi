@@ -5,9 +5,9 @@ import javax.validation.constraints.NotEmpty;
 public final class UserLoginRequest
 {
     @NotEmpty
-    private String login;
+    private final String login;
     @NotEmpty
-    private String hash;
+    private final String hash;
 
 
     public UserLoginRequest(String login, String hash)

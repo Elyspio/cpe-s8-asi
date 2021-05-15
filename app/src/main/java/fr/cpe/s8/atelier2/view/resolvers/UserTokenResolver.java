@@ -32,13 +32,15 @@ public class UserTokenResolver implements HandlerMethodArgumentResolver
     {
         var request = (HttpServletRequest) webRequest.getNativeRequest();
         Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
+        if (cookies != null)
+        {
             for (Cookie cookie : cookies)
             {
                 if (cookie.getName().equals(authenticationToken))
                 {
                     var userData = AuthenticationService.getUserCached(cookie.getValue());
-                    if(userData == null) {
+                    if (userData == null)
+                    {
                         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
                     }
                     return userData.getUser();

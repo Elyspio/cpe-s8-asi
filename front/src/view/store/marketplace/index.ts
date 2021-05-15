@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {initialState} from "./marketplace.state";
+import {getCards} from "./marketplace.async.actions";
 
 
 export const index = createSlice({
@@ -7,7 +8,9 @@ export const index = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: ({addCase}) => {
-
+		addCase(getCards.fulfilled, (state, action) => {
+			state.marketCards = action.payload;
+		})
 	}
 })
 

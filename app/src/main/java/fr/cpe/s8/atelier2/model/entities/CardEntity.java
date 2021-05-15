@@ -6,8 +6,9 @@ import javax.persistence.*;
 @Entity
 public class CardEntity
 {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
     private String name;
     private String description;
@@ -15,18 +16,20 @@ public class CardEntity
     private String affinity;
     private Long energy;
     private Long hp;
+    private Long defense;
     private Long price;
+    private Long attack;
     private String imgUrl;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity user = null;
 
     public CardEntity()
     {
     }
 
-    public CardEntity(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price, String imgUrl, UserEntity user)
+    public CardEntity(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price, Long defense, Long attack, String imgUrl, UserEntity user)
     {
         this.cardId = cardId;
         this.name = name;
@@ -38,6 +41,18 @@ public class CardEntity
         this.price = price;
         this.imgUrl = imgUrl;
         this.user = user;
+        this.defense = defense;
+        this.attack = attack;
+    }
+
+    public Long getDefense()
+    {
+        return defense;
+    }
+
+    public void setDefense(Long defense)
+    {
+        this.defense = defense;
     }
 
     public Long getCardId()
@@ -138,5 +153,15 @@ public class CardEntity
     public void setEnergy(Long energy)
     {
         this.energy = energy;
+    }
+
+    public Long getAttack()
+    {
+        return attack;
+    }
+
+    public void setAttack(Long attack)
+    {
+        this.attack = attack;
     }
 }

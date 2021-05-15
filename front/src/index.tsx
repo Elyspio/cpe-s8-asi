@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import Application from "./view/components/Application";
 import {ThemeProvider} from '@material-ui/core';
 import {themes} from "./config/theme";
-import {store, useAppSelector, history} from "./view/store/store";
+import {history, store, useAppSelector} from "./view/store/store";
 import {ConnectedRouter} from "connected-react-router";
 import {ToastContainer} from "react-toastify";
 

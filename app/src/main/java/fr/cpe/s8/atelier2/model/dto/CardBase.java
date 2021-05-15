@@ -22,7 +22,12 @@ public class CardBase
     @NotNull
     private Long price;
 
-    public CardBase(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price)
+    @NotNull
+    private final Long defence;
+    @NotNull
+    private final Long attack;
+
+    public CardBase(Long cardId, String name, String description, String family, String affinity, Long energy, Long hp, Long price, Long defence, Long attack)
     {
         this.cardId = cardId;
         this.name = name;
@@ -32,6 +37,8 @@ public class CardBase
         this.energy = energy;
         this.hp = hp;
         this.price = price;
+        this.defence = defence;
+        this.attack = attack;
     }
 
     public Long getCardId()

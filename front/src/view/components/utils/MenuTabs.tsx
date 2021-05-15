@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -13,7 +13,7 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
-	const { children, value, index, ...other } = props;
+	const {children, value, index, ...other} = props;
 
 	return (
 		<div
@@ -48,8 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-
-
 type MenuTabsProps = {
 	elements: {
 		label: string,
@@ -58,7 +56,7 @@ type MenuTabsProps = {
 	onChange: (elem: MenuTabsProps["elements"][number]) => void
 }
 
-export default function MenuTabs ({elements, onChange}: MenuTabsProps) {
+export default function MenuTabs({elements, onChange}: MenuTabsProps) {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 
