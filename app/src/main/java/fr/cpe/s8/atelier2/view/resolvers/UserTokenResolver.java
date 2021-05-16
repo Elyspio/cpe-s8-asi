@@ -4,7 +4,6 @@ import fr.cpe.s8.atelier2.model.services.authentication.AuthenticationService;
 import fr.cpe.s8.atelier2.view.controllers.annotations.GetConnectedUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

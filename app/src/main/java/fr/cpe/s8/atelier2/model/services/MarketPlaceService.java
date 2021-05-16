@@ -74,7 +74,7 @@ public class MarketPlaceService
         if (card.isPresent())
         {
             var cardValue = card.get();
-            if (cardValue.getUser() == null)
+            if (cardValue.getUser().getUserId().equals(idUser))
             {
                 var user = userRepository.findById(idUser);
                 if (user.isEmpty())
@@ -93,8 +93,7 @@ public class MarketPlaceService
             }
             else
             {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("The card %d is already linked to a user", idCard));
-
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("The card %d is not linked linked to this user", idCard));
             }
         }
         else

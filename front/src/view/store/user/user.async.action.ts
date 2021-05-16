@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Apis} from "../../../core/apis";
 import md5 from "md5";
-import {getCards, resetMarketplace} from "../marketplace/marketplace.async.actions";
+import {resetMarketplace} from "../marketplace/marketplace.async.actions";
 import {CardBase} from "../../../core/apis/back";
 import {push} from "connected-react-router";
 import {routes} from "../../components/Application";
