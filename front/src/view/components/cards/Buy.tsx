@@ -22,7 +22,7 @@ const Buy = () => {
 			<Grid item xs={7} justify={"center"} alignItems={"center"} container direction={"column"}>
 
 				<Box marginY={4}>
-					<Typography variant={"overline"} style={{textTransform: "uppercase"}}>Cards of market</Typography>
+					<Typography variant={"overline"} style={{textTransform: "uppercase"}}>Cards in market</Typography>
 				</Box>
 
 				<Marketplace cards={cards} onRowClick={(card => dispatch(setSelectedCard(card)))}/>

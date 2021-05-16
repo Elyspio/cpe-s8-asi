@@ -42,6 +42,7 @@ public class UserTokenResolver implements HandlerMethodArgumentResolver
                     if (userData == null)
                     {
                         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
                     }
                     return userData.getUser();
                 }
@@ -49,5 +50,6 @@ public class UserTokenResolver implements HandlerMethodArgumentResolver
 
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
     }
 }

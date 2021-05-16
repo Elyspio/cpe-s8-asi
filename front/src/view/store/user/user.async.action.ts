@@ -7,6 +7,7 @@ import {push} from "connected-react-router";
 import {routes} from "../../components/Application";
 import {AxiosError} from "axios";
 import {store} from "../store";
+import {toast} from "react-toastify";
 
 
 export const login = createAsyncThunk("user/login", async ({login, password}: { login: string, password: string }, {dispatch}) => {
@@ -17,11 +18,13 @@ export const login = createAsyncThunk("user/login", async ({login, password}: { 
 		const hash = ownHash + salt;
 		const res = (await Apis.authentication.loginValidate({login, hash}));
 		if (res.status < 400) {
-			await resetMarketplace(dispatch);
+			await resetMarketplace(dispatch)
+			toast.success("Login successful")
 			return res.data;
 		}
 	} catch (e) {
 		console.error("ERROR in isAuthorized", {e});
+		toast.error("An error occurred during login")
 		throw e;
 	}
 })
@@ -65,11 +68,12 @@ export const register = createAsyncThunk("user/register", async (data: UserRegis
 	}
 })
 
-export const setSelectedCard = createAsyncThunk("user/setSelectedCard", (arg: CardBase | undefined) => {
+export const setSelectedCard = createAsyncThunk("user/setSelectedCard", async (arg: CardBase | undefined) => {
 	if (arg === undefined) return undefined;
 
 	try {
-		return Apis.card.getCardDetail(arg.cardId).then(x => x.data);
+		const data = await Apis.card.getCardDetail(arg.cardId).then(x => x.data);
+		return data;
 	} catch (e) {
 		const error = e as AxiosError;
 		if (error.response?.status === 401) {
@@ -79,10 +83,11 @@ export const setSelectedCard = createAsyncThunk("user/setSelectedCard", (arg: Ca
 	}
 })
 
-export const setUserCards = createAsyncThunk("user/setCards", () => {
+export const setUserCards = createAsyncThunk("user/setCards", async () => {
 
 	try {
-		return Apis.user.getUserCards().then(x => x.data);
+		const data = await Apis.user.getUserCards().then(x => x.data);
+		return data;
 	} catch (e) {
 		const error = e as AxiosError;
 		if (error.response?.status === 401) {

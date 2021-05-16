@@ -1,6 +1,8 @@
 package fr.cpe.s8.atelier2.model.services.authentication;
 
+import fr.cpe.s8.atelier2.model.entities.CardEntity;
 import fr.cpe.s8.atelier2.model.entities.UserEntity;
+import fr.cpe.s8.atelier2.model.repositories.CardRepository;
 import fr.cpe.s8.atelier2.model.repositories.UserRepository;
 import fr.cpe.s8.atelier2.view.controllers.requests.UserRegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.Cookie;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -25,6 +27,9 @@ public class AuthenticationService
 
     @Autowired()
     private UserRepository userRepository;
+
+    @Autowired()
+    private CardRepository cardRepository;
 
     @Autowired()
     private Security security;
@@ -42,6 +47,15 @@ public class AuthenticationService
                 .filter(user -> token.equals(user.getToken()))
                 .findAny()
                 .orElse(null);
+    }
+
+    public static Cookie createAuthenticationCookie(@Nullable String val)
+    {
+        Cookie cookie = new Cookie(authenticationToken, val);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(val == null ? 0 : 50);
+        return cookie;
     }
 
     public void refreshCache(UserEntity user)
@@ -132,7 +146,6 @@ public class AuthenticationService
 
     }
 
-
     public void logout(Long userId)
     {
         boolean removed = users.removeIf(x -> x.getUser().getUserId().equals(userId));
@@ -146,21 +159,35 @@ public class AuthenticationService
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("The login %s is already used", param.getLogin()));
         }
 
-        var user = new UserEntity(
-                0L,
+        var availableCards = cardRepository.findMarketCars();
+        var defaultCards = new Random()
+                .ints(5, 0, availableCards.size())
+                .mapToObj(availableCards::get)
+                .collect(Collectors.toList());
+
+
+        UserEntity user = new UserEntity(
+                null,
                 param.getFirstname(),
                 param.getLastname(),
                 5000,
                 param.getLogin(),
                 param.getPassword(),
-                new ArrayList<>()
+                defaultCards
         );
 
         user = userRepository.save(user);
 
+
+        for (CardEntity x : defaultCards)
+        {
+            x.setUser(user);
+        }
+
+        cardRepository.saveAll(defaultCards);
+
         return user;
     }
-
 
     String generateSalt(@Nullable Integer length)
     {
@@ -174,16 +201,6 @@ public class AuthenticationService
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-    }
-
-
-    public Cookie createAuthenticationCookie(@Nullable String val)
-    {
-        Cookie cookie = new Cookie(authenticationToken, val);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(val == null ? 0 : 50);
-        return cookie;
     }
 
 

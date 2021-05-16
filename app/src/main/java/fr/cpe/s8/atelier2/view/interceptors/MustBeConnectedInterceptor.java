@@ -44,6 +44,7 @@ public class MustBeConnectedInterceptor implements HandlerInterceptor
         if (!foundConnectedUser)
         {
             System.out.println("MustBeConnectedInterceptor.preHandle user not found");
+            response.addCookie(AuthenticationService.createAuthenticationCookie(null));
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You must be logged to access to this endpoint");
         }
 

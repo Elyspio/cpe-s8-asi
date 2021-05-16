@@ -17,7 +17,8 @@ import Sell from "./cards/Sell";
 import Buy from "./cards/Buy";
 import Home from "./Home";
 import {resetMarketplace} from "../store/marketplace/marketplace.async.actions";
-
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
 
 export const routes = {
 	home: "/",
@@ -91,6 +92,7 @@ function Application() {
 						<Route path={routes.login} component={Login}/>
 						<Route path={routes.home} component={Home}/>
 					</Switch>
+					<ToastContainer position={"top-right"}/>
 				</div>
 			</Drawer>
 		</Paper>
