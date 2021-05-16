@@ -2,8 +2,6 @@ package fr.cpe.s8.atelier2.model.dto;
 
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class UserBase
 {
@@ -17,16 +15,13 @@ public class UserBase
     @NotEmpty
     private double money;
 
-    @NotNull
-    private List<Long> cardId;
 
-    public UserBase(Long userId, String firstname, String lastname, double money, List<Long> cardId)
+    public UserBase(Long userId, String firstname, String lastname, double money)
     {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.money = money;
-        this.cardId = cardId;
     }
 
     public Long getUserId()
@@ -69,13 +64,5 @@ public class UserBase
         this.money = money;
     }
 
-    public List<Long> getCardId()
-    {
-        return cardId;
-    }
 
-    public void setCardId(List<Long> cardId)
-    {
-        this.cardId = cardId;
-    }
 }

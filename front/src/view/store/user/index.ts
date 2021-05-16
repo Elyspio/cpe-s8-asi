@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {initialState} from "./user.state";
-import {getUserInfo, login, logout} from "./user.async.action"
+import {getUserInfo, login, logout, setSelectedCard} from "./user.async.action"
 
 export const index = createSlice({
 	name: "User",
@@ -19,6 +19,11 @@ export const index = createSlice({
 		addCase(logout.fulfilled, state => {
 			state.infos = undefined;
 			state.cards = [];
+		})
+
+
+		addCase(setSelectedCard.fulfilled, (state, action) => {
+			state.selectedCard = action.payload;
 		})
 
 	}

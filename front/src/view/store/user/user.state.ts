@@ -1,9 +1,10 @@
-import {CardBase, UserBase} from "../../../core/apis/back";
+import {CardBase, CardDetail, UserBase} from "../../../core/apis/back";
 
 
 export type UserState = {
 	infos?: UserBase
-	cards: CardBase[]
+	selectedCard?: CardDetail
+	cards: CardBase[],
 }
 
 export const initialState: UserState = {

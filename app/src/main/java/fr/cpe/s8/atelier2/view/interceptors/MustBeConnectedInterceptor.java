@@ -1,6 +1,7 @@
 package fr.cpe.s8.atelier2.view.interceptors;
 
 import fr.cpe.s8.atelier2.model.services.authentication.AuthenticationService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,8 +12,11 @@ import java.io.IOException;
 
 import static fr.cpe.s8.atelier2.model.services.authentication.AuthenticationService.authenticationToken;
 
+@Component
 public class MustBeConnectedInterceptor implements HandlerInterceptor
 {
+
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException
     {
@@ -30,6 +34,7 @@ public class MustBeConnectedInterceptor implements HandlerInterceptor
                     var userData = AuthenticationService.getUserCached(cookie.getValue());
                     if (userData != null)
                     {
+                        System.out.println(String.format("MustBeConnectedInterceptor.preHandle user found"));
                         foundConnectedUser = true;
                     }
                 }
@@ -38,6 +43,7 @@ public class MustBeConnectedInterceptor implements HandlerInterceptor
 
         if (!foundConnectedUser)
         {
+            System.out.println(String.format("MustBeConnectedInterceptor.preHandle user not found"));
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You must be logged to access to this endpoint");
         }
 

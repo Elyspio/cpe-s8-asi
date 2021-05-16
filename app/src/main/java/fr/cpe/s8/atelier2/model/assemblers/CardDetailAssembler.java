@@ -1,16 +1,16 @@
 package fr.cpe.s8.atelier2.model.assemblers;
 
-import fr.cpe.s8.atelier2.model.dto.CardBase;
+import fr.cpe.s8.atelier2.model.dto.CardDetail;
 import fr.cpe.s8.atelier2.model.entities.CardEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CardAssembler implements Assembler<CardEntity, CardBase>
+public class CardDetailAssembler implements Assembler<CardEntity, CardDetail>
 {
     @Override
-    public CardBase toDto(CardEntity cardEntity)
+    public CardDetail toDto(CardEntity cardEntity)
     {
-        return new CardBase(
+        return new CardDetail(
                 cardEntity.getCardId(),
                 cardEntity.getName(),
                 cardEntity.getDescription(),
@@ -20,12 +20,13 @@ public class CardAssembler implements Assembler<CardEntity, CardBase>
                 cardEntity.getHp(),
                 cardEntity.getPrice(),
                 cardEntity.getDefense(),
-                cardEntity.getAttack()
+                cardEntity.getAttack(),
+                cardEntity.getImgUrl()
         );
     }
 
     @Override
-    public CardEntity fromDto(CardBase entity)
+    public CardEntity fromDto(CardDetail entity)
     {
         return null;
     }

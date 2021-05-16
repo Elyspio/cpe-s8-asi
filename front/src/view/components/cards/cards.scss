@@ -1,0 +1,45 @@
+.Marketplace {
+	.MuiDataGrid-columnsContainer {
+		user-select: none;
+	}
+
+	.MuiDataGrid-cell {
+		text-align: left !important;
+	}
+
+	.MuiDataGrid-colCellRight {
+		.MuiDataGrid-colCell-draggable {
+			flex-direction: row-reverse !important;
+		}
+
+		.MuiDataGrid-colCellTitleContainer {
+			justify-content: flex-start !important;
+		}
+	}
+
+}
+
+
+.Buy, .Sell {
+
+	.Card {
+		.MuiCard-root {
+			height: 23rem;
+		}
+
+	}
+
+	.detail {
+
+		padding: 2rem;
+
+		.action-btn {
+			margin-top: 1.5rem;
+			display: block;
+			width: 6rem;
+			margin-bottom: 1rem;
+		}
+	}
+
+
+}

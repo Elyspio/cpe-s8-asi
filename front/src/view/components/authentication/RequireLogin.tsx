@@ -25,13 +25,12 @@ export function requireLogin<T>(
 function BackToLogin() {
 	const dispatch = useDispatch();
 	React.useEffect(() => {
-		console.log("back to login");
 		dispatch(push({
 			pathname: routes.login,
 			state: {
 				redirect: true
 			}
 		}))
-	}, [])
+	}, [dispatch])
 	return <i/>
 }

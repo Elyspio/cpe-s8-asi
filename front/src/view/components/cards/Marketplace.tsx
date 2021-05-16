@@ -1,8 +1,7 @@
 import React, {useMemo} from 'react';
-import {DataGrid} from "@material-ui/data-grid";
+import {DataGrid, GridColumns} from "@material-ui/data-grid";
 import {CardBase} from "../../../core/apis/back";
 import {Box} from "@material-ui/core";
-import "./Marketplace.scss"
 
 type item = keyof CardBase | "id"
 
@@ -10,24 +9,25 @@ type MarketplaceParams = { cards: CardBase[], onRowClick: (card: CardBase) => vo
 
 const Marketplace = (props: MarketplaceParams) => {
 
-	const colWidth = 160
-	const width = 1200
 
-	const columns: { field: item, headerName: string, width?: number, type?: "number", hide?: boolean }[] = [
-		{field: 'name', headerName: 'Name', width: colWidth},
-		{field: 'id', headerName: 'id', width: colWidth, hide: true},
-		{field: 'description', headerName: 'Description', width: colWidth * 2},
-		{field: 'affinity', headerName: 'Affinity', width: colWidth},
-		{field: 'energy', headerName: 'Energy', width: colWidth, type: "number"},
-		{field: 'hp', headerName: 'HP', width: colWidth, type: "number"},
-		{field: 'price', headerName: 'Price', width: colWidth, type: "number"},
-	];
+	const columns: GridColumns & { field: item }[] = [
+		{field: 'name', headerName: 'Name', width: 150},
+		{field: 'id', headerName: 'id', width: 0, hide: true},
+		{field: 'family', headerName: 'Family', width: 300},
+		{field: 'affinity', headerName: 'Affinity', width: 100},
+		{field: 'energy', headerName: 'Energy', width: 100, type: "number"},
+		{field: 'hp', headerName: 'HP', width: 100, type: "number"},
+		{field: 'price', headerName: 'Price', width: 100, type: "number"},
+	]
+
+	const width = columns.reduce((acc, current) => acc + current.width!!, 20)
+
 
 	const rows = useMemo(() => {
 		return props.cards.map(card => ({
 			id: card.cardId,
 			name: card.name,
-			description: card.description,
+			family: card.family,
 			affinity: card.affinity,
 			energy: card.energy,
 			hp: card.hp,

@@ -1,10 +1,8 @@
 package fr.cpe.s8.atelier2.view.controllers;
 
-import fr.cpe.s8.atelier2.model.assemblers.UserBaseAssembler;
-import fr.cpe.s8.atelier2.model.dto.UserBase;
-import fr.cpe.s8.atelier2.model.entities.UserEntity;
-import fr.cpe.s8.atelier2.model.services.UserService;
-import fr.cpe.s8.atelier2.view.controllers.annotations.GetConnectedUser;
+import fr.cpe.s8.atelier2.model.assemblers.CardDetailAssembler;
+import fr.cpe.s8.atelier2.model.dto.CardDetail;
+import fr.cpe.s8.atelier2.model.services.CardService;
 import fr.cpe.s8.atelier2.view.exceptions.RuntimeException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,18 +13,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin(origins = "*")
-@RestController("User")
-@RequestMapping("/user")
-public class UserController
+@RestController("Card")
+@RequestMapping("/card")
+public class CardController
 {
     @Autowired()
-    private UserService service;
-
-    @Autowired
-    private UserBaseAssembler userAssembler;
+    private CardService service;
+    @Autowired()
+    private CardDetailAssembler cardDetailAssembler;
 
     @Operation(summary = "Get connected user's information")
     @ApiResponses({
@@ -35,26 +31,22 @@ public class UserController
                     description = "Connected user's information",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = UserBase.class))
+                            schema = @Schema(implementation = CardDetail.class))
             ),
             @ApiResponse(
-                    responseCode = "406",
+                    responseCode = "401",
                     description = "You must be logged to use this endpoint",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = RuntimeException.class))
             ),
     })
-    @RequestMapping(value = "/connected", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @Parameter(name = "connectedUser", hidden = true)
-    public UserBase getAuthenticatedUser(@GetConnectedUser UserEntity connectedUser)
+    public CardDetail getCardDetail(@PathVariable("id") Long id)
     {
-        if (connectedUser != null)
-        {
-            return userAssembler.toDto(connectedUser);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "You must be logged to use this endpoint");
+        return cardDetailAssembler.toDto(service.getDetail(id));
     }
 
 }

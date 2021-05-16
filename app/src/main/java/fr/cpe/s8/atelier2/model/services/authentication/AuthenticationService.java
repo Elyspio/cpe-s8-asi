@@ -44,6 +44,15 @@ public class AuthenticationService
                 .orElse(null);
     }
 
+    public void refreshCache(UserEntity user)
+    {
+        users
+                .stream()
+                .filter(x -> x.getUser() != null && x.getUser().getUserId().equals(user.getUserId()))
+                .findAny().ifPresent(userLoginData -> userLoginData.setUser(user));
+
+    }
+
     public String initLogin(String login)
     {
         var info = users.stream().filter(x -> login.equals(x.getLogin())).findAny().orElse(null);

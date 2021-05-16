@@ -1,6 +1,6 @@
 package fr.cpe.s8.atelier2.view.controllers;
 
-import fr.cpe.s8.atelier2.model.assemblers.CardAssembler;
+import fr.cpe.s8.atelier2.model.assemblers.CardBaseAssembler;
 import fr.cpe.s8.atelier2.model.dto.CardBase;
 import fr.cpe.s8.atelier2.model.entities.UserEntity;
 import fr.cpe.s8.atelier2.model.services.MarketPlaceService;
@@ -22,7 +22,7 @@ public class MarketplaceController
 
 
     @Autowired
-    private CardAssembler cardAssembler;
+    private CardBaseAssembler cardAssembler;
 
     @RequestMapping(value = "/sell", method = RequestMethod.POST)
     public double sell(@PathVariable("idCard") Long idCard, @GetConnectedUser UserEntity connectedUser)

@@ -6,6 +6,7 @@ import fr.cpe.s8.atelier2.model.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public class MarketPlaceService
     @Autowired()
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Transactional
     public double buy(Long idUser, Long idCard)
     {
 
@@ -46,7 +51,7 @@ public class MarketPlaceService
                 cardValue.setUser(userValue);
 
                 cardRepository.save(cardValue);
-                userRepository.save(userValue);
+                userService.refreshUser(userValue);
 
                 return deltaMoney;
             }
@@ -62,6 +67,7 @@ public class MarketPlaceService
         }
     }
 
+    @Transactional
     public double sell(Long idUser, Long idCard)
     {
         var card = cardRepository.findById(idCard);
@@ -81,7 +87,7 @@ public class MarketPlaceService
                 userValue.setMoney(newMoney);
 
                 cardRepository.save(cardValue);
-                userRepository.save(userValue);
+                userService.refreshUser(userValue);
 
                 return newMoney;
             }

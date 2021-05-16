@@ -2,9 +2,12 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Apis} from "../../../core/apis";
 import md5 from "md5";
 import {getCards} from "../marketplace/marketplace.async.actions";
+import {CardBase} from "../../../core/apis/back";
+import {push} from "connected-react-router";
+import {routes} from "../../components/Application";
 
 
-export const login = createAsyncThunk("authentication/login", async ({login, password}: { login: string, password: string }, {dispatch}) => {
+export const login = createAsyncThunk("user/login", async ({login, password}: { login: string, password: string }, {dispatch}) => {
 	const ownHash = md5(login + password)
 	try {
 
@@ -22,7 +25,7 @@ export const login = createAsyncThunk("authentication/login", async ({login, pas
 })
 
 
-export const getUserInfo = createAsyncThunk("authentication/getUserInfo", async () => {
+export const getUserInfo = createAsyncThunk("user/getUserInfo", async () => {
 	try {
 		return await Apis.user.getAuthenticatedUser().then(x => x.data);
 	} catch (e) {
@@ -31,7 +34,7 @@ export const getUserInfo = createAsyncThunk("authentication/getUserInfo", async 
 })
 
 
-export const logout = createAsyncThunk("authentication/logout", async () => {
+export const logout = createAsyncThunk("user/logout", async () => {
 	try {
 		await Apis.authentication.logout();
 	} catch (e) {
@@ -40,7 +43,7 @@ export const logout = createAsyncThunk("authentication/logout", async () => {
 
 
 type UserRegister = { firstname: string, lastname: string, login: string, password: string };
-export const register = createAsyncThunk("authentication/register", async (data: UserRegister, {dispatch}) => {
+export const register = createAsyncThunk("user/register", async (data: UserRegister, {dispatch}) => {
 	const hashPassword = md5(data.login + data.password)
 	try {
 		await Apis.authentication.register({
@@ -52,8 +55,16 @@ export const register = createAsyncThunk("authentication/register", async (data:
 
 		await dispatch(login({login: data.login, password: data.password}))
 
+		await dispatch(push(routes.home))
+
 
 	} catch (e) {
 		console.error("ERROR in register", e);
 	}
+})
+
+export const setSelectedCard = createAsyncThunk("user/setSelectedCard", (arg: CardBase | undefined) => {
+	if (arg === undefined) return undefined;
+
+	return Apis.card.getCardDetail(arg.cardId).then(x => x.data);
 })

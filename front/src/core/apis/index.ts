@@ -1,4 +1,4 @@
-import {AuthenticationControllerApi, MarketplaceControllerApi, UserControllerApi} from "./back"
+import {AuthenticationControllerApi, CardControllerApi, MarketplaceControllerApi, UserControllerApi} from "./back"
 
 
 const backend = window.location.origin + "/cpe/asi/back";
@@ -6,7 +6,8 @@ const backend = window.location.origin + "/cpe/asi/back";
 export var Apis = {
 	authentication: new AuthenticationControllerApi(undefined, backend),
 	marketplace: new MarketplaceControllerApi(undefined, backend),
-	user: new UserControllerApi(undefined, backend)
+	user: new UserControllerApi(undefined, backend),
+	card: new CardControllerApi(undefined, backend),
 };
 
 

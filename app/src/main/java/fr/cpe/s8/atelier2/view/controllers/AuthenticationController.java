@@ -1,6 +1,6 @@
 package fr.cpe.s8.atelier2.view.controllers;
 
-import fr.cpe.s8.atelier2.model.assemblers.UserAssembler;
+import fr.cpe.s8.atelier2.model.assemblers.UserBaseAssembler;
 import fr.cpe.s8.atelier2.model.dto.UserBase;
 import fr.cpe.s8.atelier2.model.entities.UserEntity;
 import fr.cpe.s8.atelier2.model.services.UserService;
@@ -37,7 +37,7 @@ public class AuthenticationController
     private UserService userService;
 
     @Autowired
-    private UserAssembler userAssembler;
+    private UserBaseAssembler userAssembler;
 
     @Operation(summary = "Create a new account for a user")
     @ApiResponses({
