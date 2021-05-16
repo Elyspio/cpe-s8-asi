@@ -5,6 +5,8 @@ import {getCards} from "../marketplace/marketplace.async.actions";
 import {CardBase} from "../../../core/apis/back";
 import {push} from "connected-react-router";
 import {routes} from "../../components/Application";
+import {AxiosError} from "axios";
+import {store} from "../store";
 
 
 export const login = createAsyncThunk("user/login", async ({login, password}: { login: string, password: string }, {dispatch}) => {
@@ -19,7 +21,7 @@ export const login = createAsyncThunk("user/login", async ({login, password}: { 
 			return res.data;
 		}
 	} catch (e) {
-		console.error("ERROR in isAuthorized", e);
+		console.error("ERROR in isAuthorized", {e});
 		throw e;
 	}
 })
@@ -66,5 +68,13 @@ export const register = createAsyncThunk("user/register", async (data: UserRegis
 export const setSelectedCard = createAsyncThunk("user/setSelectedCard", (arg: CardBase | undefined) => {
 	if (arg === undefined) return undefined;
 
-	return Apis.card.getCardDetail(arg.cardId).then(x => x.data);
+	try {
+		return Apis.card.getCardDetail(arg.cardId).then(x => x.data);
+	} catch (e) {
+		const error = e as AxiosError;
+		if (error.response?.status === 401) {
+			store.dispatch(push({pathname: routes.login, state: {redirect: true}}))
+		}
+		throw e;
+	}
 })

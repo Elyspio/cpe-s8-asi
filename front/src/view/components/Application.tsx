@@ -16,6 +16,7 @@ import {useAppSelector} from "../store/store";
 import Sell from "./cards/Sell";
 import Buy from "./cards/Buy";
 import Home from "./Home";
+import {resetMarketplace} from "../store/marketplace/marketplace.async.actions";
 
 
 export const routes = {
@@ -30,6 +31,7 @@ export const routes = {
 function Application() {
 
 	const dispatch = useDispatch();
+	const [loading, setLoading] = React.useState(true);
 
 	const {icon, color} = useAppSelector(s => {
 		let color = s.theme.current === "light" ? "rgba(0, 0, 0, 0.53)" : "#fff";
@@ -40,25 +42,20 @@ function Application() {
 		};
 	})
 
-	let actions = [{
-		onClick: () => dispatch(toggleTheme()),
-		text: <Typography>Switch lights</Typography>,
-		icon: icon
-	}, {
-		text: <Typography>Home</Typography>,
-		onClick: () => dispatch(push(routes.home)),
-		icon: <HomeOutlined/>
-	}, {
-		text: <Typography>Register</Typography>,
-		onClick: () => dispatch(push(routes.register)),
-		icon: <AssignmentOutlined/>
-	},
-		// 	{
-		// 	text: <Typography>Login</Typography>,
-		// 	onClick: () => dispatch(push(routes.login)),
-		// 	icon: <LoginIcon fill={color}/>
-		// }
-	];
+	const actions = [
+		{
+			onClick: () => dispatch(toggleTheme()),
+			text: <Typography>Switch lights</Typography>,
+			icon: icon
+		}, {
+			text: <Typography>Home</Typography>,
+			onClick: () => dispatch(push(routes.home)),
+			icon: <HomeOutlined/>
+		}, {
+			text: <Typography>Register</Typography>,
+			onClick: () => dispatch(push(routes.register)),
+			icon: <AssignmentOutlined/>
+		}];
 
 	const connected = useAppSelector(s => !!s.user.infos)
 
@@ -72,6 +69,15 @@ function Application() {
 			icon: <LogoutIcon fill={color}/>
 		},)
 	}
+
+	React.useEffect(() => {
+		(async () => {
+			await resetMarketplace(dispatch);
+			setLoading(false);
+		})()
+	}, [])
+
+	if (loading) return null;
 
 	return (
 		<Paper square={true} className={"Application"}>

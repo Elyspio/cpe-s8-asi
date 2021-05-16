@@ -182,7 +182,7 @@ public class AuthenticationService
         Cookie cookie = new Cookie(authenticationToken, val);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(val == null ? 0 : 5 * 60);
+        cookie.setMaxAge(val == null ? 0 : 50);
         return cookie;
     }
 

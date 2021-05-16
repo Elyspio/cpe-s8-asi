@@ -13,7 +13,7 @@ const Marketplace = (props: MarketplaceParams) => {
 	const columns: GridColumns & { field: item }[] = [
 		{field: 'name', headerName: 'Name', width: 150},
 		{field: 'id', headerName: 'id', width: 0, hide: true},
-		{field: 'family', headerName: 'Family', width: 300},
+		{field: 'family', headerName: 'Family', width: 100},
 		{field: 'affinity', headerName: 'Affinity', width: 100},
 		{field: 'energy', headerName: 'Energy', width: 100, type: "number"},
 		{field: 'hp', headerName: 'HP', width: 100, type: "number"},

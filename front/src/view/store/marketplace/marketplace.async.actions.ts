@@ -2,9 +2,13 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Apis} from "../../../core/apis";
 import {CardDetail} from "../../../core/apis/back";
 import {getUserInfo, setSelectedCard} from "../user/user.async.action";
+import {AxiosError} from "axios";
+import {store} from "../store";
+import {push} from "connected-react-router";
+import {routes} from "../../components/Application";
 
 
-function reset(dispatch: CallableFunction) {
+export function resetMarketplace(dispatch: CallableFunction) {
 	return Promise.all([
 		dispatch(getUserInfo()),
 		dispatch(getCards()),
@@ -14,16 +18,40 @@ function reset(dispatch: CallableFunction) {
 
 
 export const getCards = createAsyncThunk("marketplace/getCards", async () => {
-	return await Apis.marketplace.getCards().then(x => x.data);
+	try {
+		return await Apis.marketplace.getCards().then(x => x.data);
+	} catch (e) {
+		const error = e as AxiosError;
+		if (error.response?.status === 401) {
+			store.dispatch(push({pathname: routes.login, state: {redirect: true}}))
+		}
+		throw e;
+	}
 })
 
 export const buy = createAsyncThunk("marketplace/buy", async (card: CardDetail, {dispatch}) => {
-	await Apis.marketplace.buy(card.cardId).then(x => x.data);
-	await reset(dispatch);
+	try {
+		await Apis.marketplace.buy(card.cardId).then(x => x.data);
+		await resetMarketplace(dispatch);
+	} catch (e) {
+		const error = e as AxiosError;
+		if (error.response?.status === 401) {
+			store.dispatch(push({pathname: routes.login, state: {redirect: true}}))
+		}
+		throw e;
+	}
 })
 
 export const sell = createAsyncThunk("marketplace/sell", async (card: CardDetail, {dispatch}) => {
-	await Apis.marketplace.sell(card.cardId).then(x => x.data);
-	await reset(dispatch);
+	try {
+		await Apis.marketplace.sell(card.cardId).then(x => x.data);
+		await resetMarketplace(dispatch);
+	} catch (e) {
+		const error = e as AxiosError;
+		if (error.response?.status === 401) {
+			store.dispatch(push({pathname: routes.login, state: {redirect: true}}))
+		}
+		throw e;
+	}
 })
 
