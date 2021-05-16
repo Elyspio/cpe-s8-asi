@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Apis} from "../../../core/apis";
 import {CardDetail} from "../../../core/apis/back";
-import {getUserInfo, setSelectedCard} from "../user/user.async.action";
+import {getUserInfo, setSelectedCard, setUserCards} from "../user/user.async.action";
 import {AxiosError} from "axios";
 import {store} from "../store";
 import {push} from "connected-react-router";
@@ -12,7 +12,8 @@ export function resetMarketplace(dispatch: CallableFunction) {
 	return Promise.all([
 		dispatch(getUserInfo()),
 		dispatch(getCards()),
-		dispatch(setSelectedCard(undefined))
+		dispatch(setSelectedCard(undefined)),
+		dispatch(setUserCards())
 	])
 }
 

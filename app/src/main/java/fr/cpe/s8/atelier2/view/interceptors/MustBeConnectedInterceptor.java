@@ -20,7 +20,7 @@ public class MustBeConnectedInterceptor implements HandlerInterceptor
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException
     {
-        System.out.println(String.format("MustBeConnectedInterceptor.preHandle url=%s", request.getRequestURI()));
+        System.out.printf("MustBeConnectedInterceptor.preHandle url=%s%n", request.getRequestURI());
 
         boolean foundConnectedUser = false;
 
@@ -34,7 +34,7 @@ public class MustBeConnectedInterceptor implements HandlerInterceptor
                     var userData = AuthenticationService.getUserCached(cookie.getValue());
                     if (userData != null)
                     {
-                        System.out.println(String.format("MustBeConnectedInterceptor.preHandle user found"));
+                        System.out.println("MustBeConnectedInterceptor.preHandle user found");
                         foundConnectedUser = true;
                     }
                 }
@@ -43,7 +43,7 @@ public class MustBeConnectedInterceptor implements HandlerInterceptor
 
         if (!foundConnectedUser)
         {
-            System.out.println(String.format("MustBeConnectedInterceptor.preHandle user not found"));
+            System.out.println("MustBeConnectedInterceptor.preHandle user not found");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You must be logged to access to this endpoint");
         }
 

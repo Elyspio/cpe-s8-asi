@@ -18,7 +18,7 @@ const Sell = () => {
 
 	return (
 		<Grid container className={"Buy frame"}>
-			<Grid item xs={7} justify={"center"} alignItems={"center"} container>
+			<Grid item xs={7} justify={"center"} alignItems={"center"} container direction={"column"} >
 
 				<Box marginY={4}>
 					<Typography variant={"overline"} style={{textTransform: "uppercase"}}>Your cards</Typography>

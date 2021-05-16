@@ -6,7 +6,9 @@ import fr.cpe.s8.atelier2.model.entities.UserEntity;
 import fr.cpe.s8.atelier2.model.services.MarketPlaceService;
 import fr.cpe.s8.atelier2.view.controllers.annotations.GetConnectedUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +29,20 @@ public class MarketplaceController
     @RequestMapping(value = "/sell", method = RequestMethod.POST)
     public double sell(@PathVariable("idCard") Long idCard, @GetConnectedUser UserEntity connectedUser)
     {
-        return service.sell(connectedUser.getUserId(), idCard);
+        if (connectedUser != null && connectedUser.getUserId() != null) {
+            return service.sell(connectedUser.getUserId(), idCard);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "You must be logged to use this endpoint");
     }
 
     @RequestMapping(value = "/buy/{idCard}", method = RequestMethod.POST)
     public double buy(@PathVariable("idCard") Long idCard, @GetConnectedUser UserEntity connectedUser)
     {
-        return service.buy(connectedUser.getUserId(), idCard);
+        if (connectedUser != null && connectedUser.getUserId() != null) {
+            return service.buy(connectedUser.getUserId(), idCard);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "You must be logged to use this endpoint");
+
     }
 
     @RequestMapping(value = "/cards", method = RequestMethod.GET)

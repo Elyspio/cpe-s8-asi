@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Paper, Typography} from "@material-ui/core";
 import "./Application.scss"
 import Appbar from "./appbar/Appbar";
-import {Drawer} from "./utils/drawer/Drawer"
+import {Action, Drawer} from "./utils/drawer/Drawer"
 import {toggleTheme} from "../store/theme";
 import {Route, Switch} from "react-router-dom";
 import {AssignmentOutlined, Brightness2Outlined, Brightness5Outlined, HomeOutlined} from "@material-ui/icons";
@@ -42,7 +42,7 @@ function Application() {
 		};
 	})
 
-	const actions = [
+	const actions: Action[] = [
 		{
 			onClick: () => dispatch(toggleTheme()),
 			text: <Typography>Switch lights</Typography>,
@@ -64,7 +64,6 @@ function Application() {
 			text: <Typography>Logout</Typography>,
 			onClick: () => {
 				dispatch(logout())
-				return dispatch(push(routes.login));
 			},
 			icon: <LogoutIcon fill={color}/>
 		},)

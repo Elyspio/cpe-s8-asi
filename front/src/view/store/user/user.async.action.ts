@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Apis} from "../../../core/apis";
 import md5 from "md5";
-import {getCards} from "../marketplace/marketplace.async.actions";
+import {getCards, resetMarketplace} from "../marketplace/marketplace.async.actions";
 import {CardBase} from "../../../core/apis/back";
 import {push} from "connected-react-router";
 import {routes} from "../../components/Application";
@@ -17,7 +17,7 @@ export const login = createAsyncThunk("user/login", async ({login, password}: { 
 		const hash = ownHash + salt;
 		const res = (await Apis.authentication.loginValidate({login, hash}));
 		if (res.status < 400) {
-			await dispatch(getCards());
+			await resetMarketplace(dispatch);
 			return res.data;
 		}
 	} catch (e) {
@@ -70,6 +70,19 @@ export const setSelectedCard = createAsyncThunk("user/setSelectedCard", (arg: Ca
 
 	try {
 		return Apis.card.getCardDetail(arg.cardId).then(x => x.data);
+	} catch (e) {
+		const error = e as AxiosError;
+		if (error.response?.status === 401) {
+			store.dispatch(push({pathname: routes.login, state: {redirect: true}}))
+		}
+		throw e;
+	}
+})
+
+export const setUserCards = createAsyncThunk("user/setCards", () => {
+
+	try {
+		return Apis.user.getUserCards().then(x => x.data);
 	} catch (e) {
 		const error = e as AxiosError;
 		if (error.response?.status === 401) {
