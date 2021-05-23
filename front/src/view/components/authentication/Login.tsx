@@ -4,7 +4,7 @@ import {Button, Paper, TextField, Typography} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {login as reduxLogin} from "../../store/user/user.async.action"
 import {useAppSelector} from "../../store/store";
-import {goBack} from "connected-react-router";
+import {goBack, push, RouterLocation} from "connected-react-router";
 
 function Login() {
 
@@ -12,14 +12,14 @@ function Login() {
 	const [login, setName] = React.useState("")
 
 	const dispatch = useDispatch();
-	const redirect = useAppSelector(s => (s.router.location.state as any)?.redirect);
+	const redirect = useAppSelector(s => ((s.router.location as RouterLocation<{ redirect: string }>)).state?.redirect);
 
 	const submit = React.useCallback(() => {
 		(async () => {
 			await dispatch(reduxLogin({login, password}))
 			if (redirect) {
-				console.log("redirect");
-				await dispatch(goBack())
+				console.log("redirecting to ", redirect);
+				await dispatch(push(redirect))
 			}
 		})()
 	}, [dispatch, login, password, redirect])

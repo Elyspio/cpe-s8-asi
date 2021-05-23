@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import Card from "./Card";
 import "./cards.scss"
 import {buy} from "../../store/marketplace/marketplace.async.actions";
+import {routes} from "../../../config/routes";
 
 const Buy = () => {
 
@@ -43,4 +44,4 @@ const Buy = () => {
 	);
 };
 
-export default requireLogin(Buy);
+export default requireLogin(Buy, routes.buy);

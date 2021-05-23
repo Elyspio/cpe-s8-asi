@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Grid, makeStyles} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {push} from "connected-react-router";
-import {routes} from "./Application";
+import {routes} from "../../config/routes";
 
 const useStyle = makeStyles((theme) => ({
 	link: {

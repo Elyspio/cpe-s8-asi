@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppBar, Grid, Toolbar, Typography} from '@material-ui/core';
 import {useAppSelector} from "../../store/store";
-import {routes} from "../Application";
+import {routes} from "../../../config/routes";
 
 function Appbar() {
 

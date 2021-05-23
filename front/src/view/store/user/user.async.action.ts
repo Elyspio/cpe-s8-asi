@@ -4,10 +4,10 @@ import md5 from "md5";
 import {resetMarketplace} from "../marketplace/marketplace.async.actions";
 import {CardBase} from "../../../core/apis/back";
 import {push} from "connected-react-router";
-import {routes} from "../../components/Application";
 import {AxiosError} from "axios";
 import {store} from "../store";
 import {toast} from "react-toastify";
+import {routes} from "../../../config/routes";
 
 
 export const login = createAsyncThunk("user/login", async ({login, password}: { login: string, password: string }, {dispatch}) => {
@@ -31,11 +31,7 @@ export const login = createAsyncThunk("user/login", async ({login, password}: { 
 
 
 export const getUserInfo = createAsyncThunk("user/getUserInfo", async () => {
-	try {
-		return await Apis.user.getAuthenticatedUser().then(x => x.data);
-	} catch (e) {
-		return undefined;
-	}
+	return await Apis.user.getAuthenticatedUser().then(x => x.data);
 })
 
 
@@ -83,7 +79,7 @@ export const setSelectedCard = createAsyncThunk("user/setSelectedCard", async (a
 	}
 })
 
-export const setUserCards = createAsyncThunk("user/setCards", async () => {
+export const getUserCards = createAsyncThunk("user/setCards", async () => {
 
 	try {
 		const data = await Apis.user.getUserCards().then(x => x.data);

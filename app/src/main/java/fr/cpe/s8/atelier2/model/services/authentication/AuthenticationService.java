@@ -67,6 +67,12 @@ public class AuthenticationService
 
     }
 
+    /**
+     * Initialize the connection with a user
+     * A Salt is generated and linked with this login
+     * @param login Login of the user
+     * @return the user's salt
+     */
     public String initLogin(String login)
     {
         var info = users.stream().filter(x -> login.equals(x.getLogin())).findAny().orElse(null);
@@ -78,6 +84,12 @@ public class AuthenticationService
         return salt;
     }
 
+    /**
+     * Finalize the connection with a user
+     * @param login the user's login
+     * @param userHash the user's hash md5(login + password) + salt
+     * @return the user's token
+     */
     public String loginVerify(String login, String userHash)
     {
 
@@ -98,14 +110,17 @@ public class AuthenticationService
                 .findAny()
                 .orElse(null);
 
+        // If a userData with this login was found
         if (data != null)
         {
             var salt = data.getSalt();
             var user = userRepository.findByLogin(login);
+            // If a user with this login exists in database
             if (user != null)
             {
                 var hash = user.getPassword() + salt;
                 var isAuthorized = hash.equals(userHash);
+                // If the passwords match
                 if (isAuthorized)
                 {
                     var token = generateSalt(30);
@@ -129,6 +144,7 @@ public class AuthenticationService
                 }
                 else
                 {
+                    logout(user.getUserId());
                     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
                 }
             }

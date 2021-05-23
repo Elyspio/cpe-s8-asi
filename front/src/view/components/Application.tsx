@@ -19,14 +19,7 @@ import Home from "./Home";
 import {resetMarketplace} from "../store/marketplace/marketplace.async.actions";
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from "react-toastify";
-
-export const routes = {
-	home: "/",
-	register: "/authentication/register",
-	login: "/authentication/login",
-	sell: "/marketplace/sell",
-	buy: "/marketplace/buy",
-}
+import {routes} from "../../config/routes";
 
 
 function Application() {
