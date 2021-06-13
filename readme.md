@@ -4,9 +4,9 @@
 
 We are using docker to set up the proxy during the development
 
-Use `docker compose up --build proxy`
+Use `docker compose up --build proxy backend frontend `
 
-If you need a local database remove `proxy` from the last command.
+If you need a local database add `db` to the last command.
 
 ## URLS
 

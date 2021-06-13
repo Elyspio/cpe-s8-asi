@@ -54,7 +54,7 @@ public class AuthenticationService
         Cookie cookie = new Cookie(authenticationToken, val);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(val == null ? 0 : 50);
+        cookie.setMaxAge(val == null ? 0 : 600);
         return cookie;
     }
 
@@ -137,7 +137,7 @@ public class AuthenticationService
                                     logout(user.getUserId());
                                 }
                             },
-                            50000
+                            600*1000
                     );
 
                     return token;

@@ -51,8 +51,8 @@ services:
     build:
       context: "./front"
       dockerfile: "Dockerfile"
-      networks:
-        - asi
+    networks:
+      - asi
 
 
 networks:
